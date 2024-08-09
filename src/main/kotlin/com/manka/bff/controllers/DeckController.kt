@@ -26,7 +26,6 @@ class DeckController(
             correlationId = UUID.randomUUID().toString(),
             sendTo = "sendTo",
             replyTo = "replay",
-            timeStamp = LocalDateTime.now()
         )
         val answer: Any = testService.kafkaRequestReply(message)
         println(answer.toString())

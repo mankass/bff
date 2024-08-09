@@ -29,9 +29,9 @@ class KafkaConfiguration {
 
     @Bean //register and configure replying kafka template
     fun replyingTemplate(
-        pf: ProducerFactory<String, Any>?,
+        pf: ProducerFactory<String, MessageStructure>?,
         repliesContainer:ConcurrentMessageListenerContainer<String, Any>
-    ): ReplyingKafkaTemplate<String, Any, Any> {
+    ): ReplyingKafkaTemplate<String, MessageStructure, Any> {
         return ReplyingKafkaTemplate(pf, repliesContainer)
     }
 

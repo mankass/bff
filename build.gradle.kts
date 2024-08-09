@@ -22,6 +22,7 @@ dependencies {
 //    Swagger dependencies
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
+    implementation("org.slf4j:slf4j-api:2.0.15")
 
     implementation("org.springframework.kafka:spring-kafka:3.2.1")
 

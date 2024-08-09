@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class TestService(
-    val template: ReplyingKafkaTemplate<String, Any, Any>
+    val template: ReplyingKafkaTemplate<String, MessageStructure, Any>
 ) {
 
     //KFT
@@ -23,12 +23,11 @@ class TestService(
 
     @Throws(Exception::class)
     fun kafkaRequestReply(request: MessageStructure): Any {
-        val record = ProducerRecord<String, Any>(request.sendTo, request.content)
+        val record = ProducerRecord<String, MessageStructure>(request.sendTo, request)
         record.headers().add(RecordHeader(KafkaHeaders.REPLY_TOPIC, request.replyTo.toByteArray()))
-        record.headers().add("timeStamp", request.timeStamp.toString().toByteArray())
-        val replyFuture: RequestReplyFuture<String, Any, Any> =
+        val replyFuture: RequestReplyFuture<String, MessageStructure, Any> =
             template.sendAndReceive(record)
-        val sendResult: SendResult<String, Any> = replyFuture.sendFuture[10, TimeUnit.SECONDS]
+        val sendResult: SendResult<String, MessageStructure> = replyFuture.sendFuture[10, TimeUnit.SECONDS]
         val consumerRecord = replyFuture[10, TimeUnit.SECONDS]
         return consumerRecord.value()
     }

@@ -1,5 +1,9 @@
 spring:
   kafka:
+    producer:
+      value-serializer: com.manka.bff.infra.MessageStructureSerializer
+    consumer:
+      value-deserializer: com.manka.bff.infra.MessageStructureDeserializer
     bootstrap-servers: localhost:29092
 server:
   port: 7070
